@@ -113,11 +113,15 @@ public class EditFragment extends Fragment {
     protected void btnAddClick(final View view) {
         dismissKeyboard();
 
-        int dobDay = Integer.parseInt(etDobDay.getText().toString());
-        int dobMonth = Integer.parseInt(etDobMonth.getText().toString()) - 1;
-        int dobYear = Integer.parseInt(etDobYear.getText().toString());
+        String rawDay = etDobDay.getText().toString();
+        String rawMonth = etDobMonth.getText().toString();
+        String rawYear = etDobYear.getText().toString();
 
-        if (Utils.validateDateValues(dobDay, dobMonth, dobYear)) {
+        if (Utils.validateDateValues(rawDay, rawMonth, rawYear)) {
+            int dobDay = Integer.parseInt(rawDay);
+            int dobMonth = Integer.parseInt(rawMonth) - 1;
+            int dobYear = Integer.parseInt(rawYear);
+
             Call<Void> newContact = APIServices.YAACM_SERVICE.updateContact(selectedContact.getObjectId(), new YAACMContactDTO(
                     etCity.getText().toString(),
                     etComment.getText().toString(),

@@ -82,11 +82,16 @@ public class AddFragment extends Fragment {
     protected void btnAddClick(final View view) {
         dismissKeyboard();
 
-        int dobDay = Integer.parseInt(etDobDay.getText().toString());
-        int dobMonth = Integer.parseInt(etDobMonth.getText().toString()) - 1;
-        int dobYear = Integer.parseInt(etDobYear.getText().toString());
+        String rawDay = etDobDay.getText().toString();
+        String rawMonth = etDobMonth.getText().toString();
+        String rawYear = etDobYear.getText().toString();
 
-        if (Utils.validateDateValues(dobDay, dobMonth, dobYear)) {
+
+        if (Utils.validateDateValues(rawDay, rawMonth, rawYear)) {
+            int dobDay = Integer.parseInt(rawDay);
+            int dobMonth = Integer.parseInt(rawMonth) - 1;
+            int dobYear = Integer.parseInt(rawYear);
+
             // create a DTO to send data to Parse Server
             // this will be converted to JSON in the request body
             Call<Void> newContact = APIServices.YAACM_SERVICE.createContact(new YAACMContactDTO(

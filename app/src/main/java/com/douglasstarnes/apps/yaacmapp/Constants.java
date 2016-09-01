@@ -3,11 +3,11 @@ package com.douglasstarnes.apps.yaacmapp;
 
 public class Constants {
     // Parse Server installation on Heroku via https://devcenter.heroku.com/articles/deploying-a-parse-server-to-heroku
-    public static final String HEADER_X_PARSE_APPLICATION_ID = "X-Parse-Application-ID: <!-- your key here -->";
-    public static final String PARSE_BASE_URL = "http://your-parse-server.herokuapp.com/parse/";
+    public static final String HEADER_X_PARSE_APPLICATION_ID = "X-Parse-Application-ID: <!-- your parse server application id here -->";
+    public static final String PARSE_BASE_URL = "http://your-heroku-app-subdomain.herokuapp.com/parse/";
 
     // http://www.zipcodeapi.com/
-    public static final String ZIP_CODE_API_KEY = " <!-- your key here -->";
+    public static final String ZIP_CODE_API_KEY = "<!-- your zipcodeapi.com key here -->";
     public static final String ZIP_CODE_API_BASE_URL = "https://www.zipcodeapi.com/rest/" + Constants.ZIP_CODE_API_KEY + "/info.json/";
 
     // used as the key to send Parcelables between fragments

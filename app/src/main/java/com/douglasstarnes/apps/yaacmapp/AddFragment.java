@@ -200,20 +200,23 @@ public class AddFragment extends Fragment {
                         etState.setText(zipCode.getState());
                     } else {
                         dismissKeyboard();
-                        AlertDialog.Builder alert = new AlertDialog.Builder(getContext())
-                                .setTitle("Error")
-                                .setMessage("The value for Zip Code is invalid")
-                                .setCancelable(false)
-                                .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        // clear the invalid zip code
-                                        etZipCode.setText("");
-                                        // return focus to the zip code
-                                        etZipCode.requestFocus();
-                                    }
-                                });
-                        alert.show();
+                        Context ctx = getContext();
+                        if (ctx != null) {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(ctx)
+                                    .setTitle("Error")
+                                    .setMessage("The value for Zip Code is invalid")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            // clear the invalid zip code
+                                            etZipCode.setText("");
+                                            // return focus to the zip code
+                                            etZipCode.requestFocus();
+                                        }
+                                    });
+                            alert.show();
+                        }
                     }
                 }
 
@@ -225,8 +228,12 @@ public class AddFragment extends Fragment {
         }
     }
 
+
+
     private void dismissKeyboard() {
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(btnAdd.getWindowToken(), 0);
+        if (getActivity() != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(btnAdd.getWindowToken(), 0);
+        }
     }
 }

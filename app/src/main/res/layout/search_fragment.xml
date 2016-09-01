@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edit_text_search_term"
-        android:hint="Search Term"/>
+        android:hint="Search Term"
+        android:inputType="textCapSentences"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:orientation="horizontal">

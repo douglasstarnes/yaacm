@@ -102,7 +102,9 @@ public class SearchFragment extends Fragment{
     }
 
     private void dismissKeyboard() {
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(etSearchTerm.getWindowToken(), 0);
+        if (getActivity() != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(etSearchTerm.getWindowToken(), 0);
+        }
     }
 }

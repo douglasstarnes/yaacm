@@ -1,8 +1,8 @@
 package com.douglasstarnes.apps.yaacmapp;
 
-/**
- * Created by douglasstarnes on 8/31/16.
- */
+
+// merely a container to ship contacts to Parse Server, no logic needed expcept the constructor
+// which makes creating a new object simpler
 public class YAACMContactDTO {
     public String firstName;
     public String lastName;

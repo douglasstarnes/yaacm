@@ -28,6 +28,7 @@ public class PreferencesFragment extends Fragment {
         View root = inflater.inflate(R.layout.preferences_layout, container, false);
         ButterKnife.bind(this, root);
 
+        // retrieve the current delete warning preference value and set the switch appropriately
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.YAACM_PREFERENCES_KEY, Context.MODE_PRIVATE);
         swSuppressDeleteWarning.setChecked(sharedPreferences.getBoolean(Constants.SUPPRESS_DELETE_WARNING_KEY, false));
 
@@ -35,6 +36,8 @@ public class PreferencesFragment extends Fragment {
     }
 
     @OnCheckedChanged(R.id.switch_suppress_delete_warning)
+    // when the switch changes value, the boolean will hold the new value of the switch
+    // just set the warning key to that value in the preferences
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.YAACM_PREFERENCES_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

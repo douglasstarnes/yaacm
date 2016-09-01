@@ -77,10 +77,14 @@ public class YAACMListFragment extends ListFragment implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        // contact to show in the details fragment
         YAACMContact selectedContact = (YAACMContact)getListAdapter().getItem(i);
         Fragment detailsFragment = new DetailsFragment();
+        // bundle to hold the selected contacts
         Bundle bundle = new Bundle();
+        // convert selected contact to Parcelable
         bundle.putParcelable(Constants.SELECTED_CONTACT_KEY, selectedContact);
+        // attach bundle to fragment
         detailsFragment.setArguments(bundle);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, detailsFragment);
@@ -101,17 +105,23 @@ public class YAACMListFragment extends ListFragment implements AdapterView.OnIte
         switch (item.getItemId()) {
             case R.id.list_context_menu_delete:
                 LayoutInflater inflater = getActivity().getLayoutInflater();
+                // delete uses a custom dialog with a checkbox to suppress the delete warning
                 View deleteDialog = inflater.inflate(R.layout.delete_dialog_layout, null);
 
                 ButterKnife.bind(this, deleteDialog);
 
+                // when the checkbox in the delete dialog is selected, it sets a key
+                // in the preferences to true
                 SharedPreferences sharedPrefs = getActivity().getSharedPreferences(Constants.YAACM_PREFERENCES_KEY, Context.MODE_PRIVATE);
 
+                // if the key is false, the warning is not suppressed so show build and show the dialog
                 if (!sharedPrefs.getBoolean(Constants.SUPPRESS_DELETE_WARNING_KEY, false)) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
                     alert.setTitle("Confirm Delete");
                     alert.setView(deleteDialog);
                     alert.setCancelable(false);
+                    // should the checkbox be considered with the negative button?
+                    // not sure, depends on the situation but I left it in for the demo
                     alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -128,18 +138,22 @@ public class YAACMListFragment extends ListFragment implements AdapterView.OnIte
                     });
                     alert.show();
                 } else {
+                    // otherwise just perform the delete
                     YAACMContact selectedContact = (YAACMContact) getListAdapter().getItem(menuInfo.position);
                     deleteContact(selectedContact);
                 }
                 return true;
             case R.id.list_context_menu_edit:
+                // similar to the details fragment
+                // covering the selected contact (via the menuInfo data) to a Parcelable
+                // and then putting it in a Bundle for the edit fragment
                 YAACMContact selectedContact = (YAACMContact)getListAdapter().getItem(menuInfo.position);
-                Fragment detailsFragment = new EditFragment();
+                Fragment editFragment = new EditFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants.SELECTED_CONTACT_KEY, selectedContact);
-                detailsFragment.setArguments(bundle);
+                editFragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, detailsFragment);
+                transaction.replace(R.id.container, editFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
                 return true;
@@ -164,6 +178,8 @@ public class YAACMListFragment extends ListFragment implements AdapterView.OnIte
         });
     }
 
+    // set the delete warning key in the preferences
+    // from this fragment, it can only be set to true
     private void suppressDeleteWarning() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.YAACM_PREFERENCES_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

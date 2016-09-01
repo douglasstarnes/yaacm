@@ -25,6 +25,7 @@ public class YAACMListAdapter extends ArrayAdapter<YAACMContact> {
         notifyDataSetChanged();
     }
 
+    // using the 'view holder pattern'
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
@@ -35,6 +36,7 @@ public class YAACMListAdapter extends ArrayAdapter<YAACMContact> {
             row = inflater.inflate(R.layout.yaacm_list_row_layout, parent, false);
 
             contactHolder = new ContactHolder();
+            // I chose not to use ButterKnife here because it doesn't really simplify the code that much
             contactHolder.tvFullName = (TextView)row.findViewById(R.id.text_view_list_full_name);
             contactHolder.tvLocation = (TextView)row.findViewById(R.id.text_view_list_location);
             contactHolder.ivFavorite = (ImageView)row.findViewById(R.id.image_view_favorite);

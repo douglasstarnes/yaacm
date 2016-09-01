@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 
 import butterknife.BindView;
 
+// simply handles the options menu and loading the home fragment
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.checkbox_suppress_delete_warning)
     CheckBox cbSuppressDeleteWarning;

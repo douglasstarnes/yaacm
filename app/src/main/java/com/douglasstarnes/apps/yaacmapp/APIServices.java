@@ -10,11 +10,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by douglasstarnes on 8/31/16.
  */
 public class APIServices {
+    // set the timeout to 60 seconds
+    // this is set to be long to make up for the free Heroku instance sleeping after 30 seconds
     private static final OkHttpClient client = new OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .build();
 
+    // the builders to create the services that talk to the REST APIs
     private static Retrofit parseAPIBuilder = new Retrofit.Builder()
             .baseUrl(Constants.PARSE_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -27,6 +30,7 @@ public class APIServices {
             .client(client)
             .build();
 
+    // the services that translater between Java and HTTP/REST
     public static YAACMService YAACM_SERVICE = APIServices.parseAPIBuilder.create(YAACMService.class);
     public static ZipCodeService ZIP_CODE_SERVICE = APIServices.zipCodeAPIBuilder.create(ZipCodeService.class);
 }

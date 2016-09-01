@@ -30,7 +30,7 @@ import retrofit2.Response;
 /**
  * Created by douglasstarnes on 8/31/16.
  */
-public class SearchFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class SearchFragment extends Fragment{
     private ArrayList<YAACMContact> contacts;
 
     @BindView(R.id.edit_text_search_term)
@@ -48,15 +48,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         View root = inflater.inflate(R.layout.search_fragment, container, false);
         ButterKnife.bind(this, root);
 
-        ArrayAdapter<String> spinnerAdapater = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, getSearchFields());
-        spinnerAdapater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, getSearchFields());
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spSearchField.setAdapter(spinnerAdapater);
+        spSearchField.setAdapter(spinnerAdapter);
 
         contacts = new ArrayList<>();
         YAACMListAdapter listAdapter = new YAACMListAdapter(getContext(), 0, contacts);
         lvSearch.setAdapter(listAdapter);
-        // lvSearch.setOnItemClickListener(this);
 
         return root;
     }
@@ -75,6 +74,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     @OnClick(R.id.button_search_bar)
     public void btnSearchClick(View view) {
         dismissKeyboard();
+        // require a search field be selected
         if (spSearchField.getSelectedItemPosition() > 0) {
             String searchField = Constants.CONTACT_SEARCH_FIELDS[spSearchField.getSelectedItemPosition() - 1];
             String searchTerm = etSearchTerm.getText().toString();
@@ -88,6 +88,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
                         contacts.clear();
                         contacts.addAll(response.body().results);
                     } else {
+                        // if the response has no results, use a custom empty view
+                        // instead of a blank list
                         LayoutInflater inflater = getActivity().getLayoutInflater();
                         View emptyView = inflater.inflate(R.layout.list_empty_view, null);
                         ((ViewGroup)lvSearch.getParent()).addView(emptyView, 2);
@@ -101,19 +103,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
                 }
             });
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        YAACMContact selectedContact = (YAACMContact)lvSearch.getAdapter().getItem(i);
-        Fragment detailsFragment = new DetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.SELECTED_CONTACT_KEY, selectedContact);
-        detailsFragment.setArguments(bundle);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, detailsFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     private void dismissKeyboard() {

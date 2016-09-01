@@ -33,9 +33,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by douglasstarnes on 8/31/16.
- */
+// this is *very* similar to the AddFragment
+// see the comments in that class for details
 public class EditFragment extends Fragment {
     private boolean markOverflow = true;
     private YAACMContact selectedContact = null;
@@ -82,6 +81,7 @@ public class EditFragment extends Fragment {
         View root = inflater.inflate(R.layout.add_fragment, container, false);
         ButterKnife.bind(this, root);
 
+        // get the selected contact from the list fragment
         Bundle bundle = this.getArguments();
         selectedContact = (YAACMContact)bundle.getParcelable(Constants.SELECTED_CONTACT_KEY);
 
@@ -102,6 +102,8 @@ public class EditFragment extends Fragment {
         etComment.setText(selectedContact.getComments());
         cbFavorite.setChecked(selectedContact.isFavorite());
 
+        // reusing the layout for the edit fragment
+        // need to change the positive button text which is "Add" in the layout file
         btnAdd.setText("Update");
 
         return root;

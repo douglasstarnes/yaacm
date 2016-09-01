@@ -43,16 +43,22 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.details_fragment, container, false);
         ButterKnife.bind(this, root);
+
+        // get the selected contact from the list fragment
         Bundle bundle = this.getArguments();
         YAACMContact contact = (YAACMContact)bundle.getParcelable(Constants.SELECTED_CONTACT_KEY);
+
+        // populate the details fragment
         String fullName = contact.getFirstName() + " " + contact.getLastName();
         String location = contact.getCity() + ", " + contact.getState();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM. d, yyyy", Locale.ENGLISH);
+
         tvFullName.setText(fullName);
         tvLocation.setText(location);
         tvZipCode.setText(contact.getZipCode());
         tvBirthdate.setText(simpleDateFormat.format(contact.getDob()));
         tvComment.setText(contact.getComments());
+
         if (contact.isFavorite()) {
             tvFavorite.setText("Is a Favorite");
             tvFavorite.setTextColor(Color.BLUE);
@@ -62,6 +68,7 @@ public class DetailsFragment extends Fragment {
             tvFavorite.setTextColor(Color.RED);
             tvFavorite.setTypeface(null, Typeface.ITALIC);
         }
+
         return root;
     }
 }

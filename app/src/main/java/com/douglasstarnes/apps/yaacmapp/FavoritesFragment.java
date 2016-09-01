@@ -23,7 +23,6 @@ public class FavoritesFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // getListView().setOnItemClickListener(this);
         contacts = new ArrayList<>();
         YAACMListAdapter adapter = new YAACMListAdapter(getContext(), 0, contacts);
         setListAdapter(adapter);
@@ -31,6 +30,7 @@ public class FavoritesFragment extends ListFragment {
     }
 
     private void refreshItems() {
+        // reuse the search method here with a different query template
         Call<YAACMContactList> listFavorites = APIServices.YAACM_SERVICE.searchContacts(Constants.CONTACT_SERVICE_FAVORITES_QUERY_TEMPLATE);
 
         listFavorites.enqueue(new Callback<YAACMContactList>() {
@@ -41,6 +41,7 @@ public class FavoritesFragment extends ListFragment {
                     contacts.clear();
                     contacts.addAll(contactList.results);
                 } else {
+                    // use empty view if no results
                     LayoutInflater inflater = getActivity().getLayoutInflater();
                     View emptyView = inflater.inflate(R.layout.list_empty_view, null);
                     ((ViewGroup)getListView().getParent()).addView(emptyView, 0);

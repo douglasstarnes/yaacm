@@ -6,7 +6,13 @@ import android.os.Parcelable;
 import java.util.Calendar;
 import java.util.Date;
 
-
+// the class that represents the contact data
+// several interesting notes:
+// 1) Implements Parcelable to allow transporting between fragments
+// 2) Each date component for DOB is store separately.  This makes the Parcelable implementation
+//    more straightforward.  Parse Server can handle dates and Java dates can be Parcelable
+//    but for demo purposes I chose to keep it simple
+// the Parcelable implementation is mostly boilerplate
 public class YAACMContact implements Parcelable {
     private String firstName;
     private String lastName;
@@ -84,6 +90,7 @@ public class YAACMContact implements Parcelable {
     };
 
     public void setDob(Date dob) {
+        // separate the Java date into individual components
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dob);
         this.dobYear = calendar.get(Calendar.YEAR);
@@ -92,6 +99,7 @@ public class YAACMContact implements Parcelable {
     }
 
     public Date getDob() {
+        // combine individual date components
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, this.dobYear);
         calendar.set(Calendar.MONTH, this.dobMonth);

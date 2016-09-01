@@ -1,8 +1,7 @@
 package com.douglasstarnes.apps.yaacmapp;
 
-/**
- * Created by douglasstarnes on 8/31/16.
- */
+// the response for zipcodeapi.com has more data than this.
+// for simplicity I only included fields for the keys I am interested in
 public class YAACMZipCode {
     private String city;
     private String state;

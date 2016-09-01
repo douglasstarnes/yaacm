@@ -2,9 +2,6 @@ package com.douglasstarnes.apps.yaacmapp;
 
 import java.util.Calendar;
 
-/**
- * Created by douglasstarnes on 8/31/16.
- */
 public class Utils {
     // given values for a day, month and year, return if they represent a valid date
     public static boolean validateDateValues(int day, int month, int year) {

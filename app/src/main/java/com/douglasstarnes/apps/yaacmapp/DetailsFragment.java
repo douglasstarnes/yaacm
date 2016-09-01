@@ -16,9 +16,6 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by douglasstarnes on 8/31/16.
- */
 public class DetailsFragment extends Fragment {
     @BindView(R.id.details_full_name)
     TextView tvFullName;

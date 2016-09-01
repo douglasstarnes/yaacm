@@ -14,9 +14,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by douglasstarnes on 8/31/16.
- */
 public class FavoritesFragment extends ListFragment {
     private ArrayList<YAACMContact> contacts;
 

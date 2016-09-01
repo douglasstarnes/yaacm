@@ -15,9 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 
-/**
- * Created by douglasstarnes on 8/31/16.
- */
 public class PreferencesFragment extends Fragment {
     @BindView(R.id.switch_suppress_delete_warning)
     Switch swSuppressDeleteWarning;
